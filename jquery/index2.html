@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<button id="btn">Click me</button>
+
+<div>
+    Document ready trong jquery
+    Document chính là toàn bộ trang html
+    Document ready trong jquery có nghĩa là khi trang html đã tải xong các thành phần
+    ở trên trang thì đoạn code bên trong document ready mới được phép chạy
+
+    $ trong jquery là bộ chọn cho phép chọn đối tương html mong muốn
+</div>
+
+
+<script
+        src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+        // code js sẽ chạy khi mà trang load xong
+
+
+        $("#btn").on("click", function () {
+            alert("thành công");
+        });
+
+    });
+
+</script>
+</body>
+</html>
