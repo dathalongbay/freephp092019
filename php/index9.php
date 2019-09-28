@@ -7,6 +7,7 @@
  */
 
 
+
 /**
  * mệnh đề for
  * $i = 1 biến đếm khoi đầu vòng lặp
