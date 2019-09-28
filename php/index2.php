@@ -19,7 +19,6 @@
     lấy ttp://localhost/ + đường dẫn trên ổ đĩa của file nhưng đã xóa đi C:\xampp\htdocs\
     từ htdocs trở về phía trước chỉ giữ lại đoạn phia sau htdocs
     đổi tất cả \ thành /
-
 </div>
 
 <?php
