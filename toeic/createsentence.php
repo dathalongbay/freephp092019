@@ -12,14 +12,16 @@
 // nạp file kết nối CSDL
 include_once "config.php";
 
-$newword = "";
-$mean = "";
-$type = "";
+$id = isset($_GET["id"]) ? (int) $_GET["id"] : 0;
+$sentence_example = "";
+$sentence_translate = "";
 
-// 3 dòng in ra cấu trúc của 1 mảng php
-echo "<pre>";
-print_r($_POST);
-echo "</pre>";
+$sqlSelect = "SELECT * FROM newwords WHERE id=".$id;
+
+$newwordResult = $connection->query($sqlSelect);
+
+$newword = $newwordResult->fetch_assoc();
+
 /**
  * Kiểm tra xem có dữ liệu submit đi hay không
  * !empty($_POST) có nghĩa là không rỗng tức là có dữ liệu trong mảng này
@@ -36,16 +38,16 @@ if (isset($_POST) && !empty($_POST)) {
      * !isset($_POST["name"]) => không tồn tại
      *  empty($_POST["name"]) => rỗng
      */
-    if (!isset($_POST["newword"]) || empty($_POST["newword"])) {
-        $errors[] = "Từ vựng không hợp lệ";
+    if (!isset($_POST["sentence_example"]) || empty($_POST["sentence_example"])) {
+        $errors[] = "Câu không hợp lệ";
     }
 
-    if (!isset($_POST["mean"]) || empty($_POST["mean"])) {
-        $errors[] = "Nghĩa của từ không hợp lệ";
+    if (!isset($_POST["sentence_translate"]) || empty($_POST["sentence_translate"])) {
+        $errors[] = "Nghĩa của câu không hợp lệ";
     }
 
-    if (!isset($_POST["type"]) || empty($_POST["type"])) {
-        $errors[] = "Kiểu từ không hợp lệ";
+    if (!isset($_POST["newword_id"]) || empty($_POST["newword_id"])) {
+        $errors[] = "Từ mới không hợp lệ";
     }
 
     /**
@@ -53,15 +55,11 @@ if (isset($_POST) && !empty($_POST)) {
      */
     if (empty($errors)) {
 
-        $newword = $_POST['newword'];
-        $mean = $_POST['mean'];
-        $type = $_POST['type'];
+        $sentence_example = $_POST['sentence_example'];
+        $sentence_translate = $_POST['sentence_translate'];
+        $newword_id = (int)$_POST['newword_id'];
 
-        $sqlInsert = "INSERT INTO newwords (newword, mean, type) VALUES ('$newword', '$mean', '$type')";
-
-        echo "<br>" . $sqlInsert;
-
-
+        $sqlInsert = "INSERT INTO sentences (sentence_example, sentence_translate, newword_id) VALUES ('$sentence_example', '$sentence_translate', '$newword_id')";
 
         // Thực hiện câu SQL
         $result = $connection->query($sqlInsert);
@@ -90,19 +88,17 @@ Thêm từ mới thất bại !
 <div class="container">
     <div class="row">
         <div class="col-md-12">
-            <h1>Tạo từ mới</h1>
+            <h1>Tạo ví dụ cho từ : "<?php echo $newword["newword"] ?>"</h1>
             <form name="create" action="" method="post">
+                <input type="hidden" name="newword_id" value="<?php echo $id ?>">
+
                 <div class="form-group">
-                    <label>Từ mới:</label>
-                    <input type="text" name="newword" class="form-control" value="<?php echo $newword ?>">
+                    <label>Câu ví dụ:</label>
+                    <textarea class="form-control" name="sentence_example"><?php echo $sentence_example ?></textarea>
                 </div>
                 <div class="form-group">
                     <label>Ý nghĩa:</label>
-                    <input type="text" name="mean" class="form-control" value="<?php echo $mean ?>">
-                </div>
-                <div class="form-group">
-                    <label>Từ loại:</label>
-                    <input type="text" name="type" class="form-control" value="<?php echo $type ?>">
+                    <textarea class="form-control" name="sentence_translate"><?php echo $sentence_translate ?></textarea>
                 </div>
 
                 <button type="submit" class="btn btn-primary">Thêm mới</button>
