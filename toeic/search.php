@@ -21,6 +21,11 @@ $linkSearch = "search.php?search=$search";
 // nạp file kết nối CSDL
 include_once "config.php";
 
+/**
+ * lấy dữ liệu cho cột bên tay trái gồm các từ mới
+ * nếu có dữ liệu search trên url
+ * sẽ lọc kết quả bằng câu lệnh sql LIKE để đảm bảo kết quả sẽ ít hơn
+ */
 if (strlen($search) > 0) {
     $sqlSelect = "SELECT * FROM newwords WHERE newword LIKE '%$search%'";
 
@@ -47,7 +52,10 @@ if ($id > 0) {
     $mean = $connection->query($sqlSelect2);
 }
 
-
+/**
+ * lây dữ liệu cho cột tay phải
+ * phần nghĩa của từ mới
+ */
 if ($id > 0) {
     $sqlSelect3 = "SELECT * FROM sentences WHERE newword_id = ".$id;
 
